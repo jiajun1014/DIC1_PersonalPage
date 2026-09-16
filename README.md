@@ -2,7 +2,13 @@
 
 A sleek, responsive personal dashboard and high-precision live clock built with modern web standards, glassmorphism aesthetics, and real-time state persistence.
 
-![Personal Space Live Demo Snapshot](demo.png)
+## 🔗 Live Demonstration
+
+👉 Live Demo: https://jiajun1014.github.io/NCHU_AIOT/
+
+![Live Demonstration](demo.png)
+
+---
 
 ## ✨ Features
 
@@ -15,6 +21,8 @@ A sleek, responsive personal dashboard and high-precision live clock built with 
   - **Daily Focus & Intentions**: Memo notepad with auto-save to `localStorage`.
 - **Dynamic Themes**: Color accents with vibrant glassmorphic gradients: Cyan, Violet, Emerald, and Amber.
 - **Personalized Profile**: In-place editable name, bio, and status tag that automatically sync with `localStorage`.
+
+---
 
 ## 🚀 Quick Start
 
@@ -32,11 +40,15 @@ npx serve .
 
 Then visit [http://localhost:3456](http://localhost:3456) in your browser.
 
+---
+
 ## 🛠 Tech Stack
 
 - **HTML5**: Semantic layout and accessibility
 - **Vanilla CSS3**: Modern glassmorphism, CSS variables, fluid typography, responsive grid
 - **Vanilla JavaScript (ES6+)**: `requestAnimationFrame` clock loop, `Intl.DateTimeFormat`, `localStorage` persistence
+
+---
 
 ## 👤 Author
 
