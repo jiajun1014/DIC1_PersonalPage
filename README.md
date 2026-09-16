@@ -52,5 +52,5 @@ Then visit [http://localhost:3456](http://localhost:3456) in your browser.
 
 ## 👤 Author
 
-- **JUN** ([@jiajun1014](https://github.com/jiajun1014))
+- **Jun (吳佳駿)** ([@jiajun1014](https://github.com/jiajun1014))
 - Repository: [NCHU_AIOT](https://github.com/jiajun1014/NCHU_AIOT)

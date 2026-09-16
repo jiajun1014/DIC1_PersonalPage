@@ -1,6 +1,6 @@
 /**
  * AIoT 2026 - Personal Telemetry & Live Precision Clock
- * Author: Jun (陳佳駿)
+ * Author: Jun (吳佳駿)
  */
 
 (function () {
@@ -8,7 +8,7 @@
 
   // --- Configuration & Default State ---
   const DEFAULT_PROFILE = {
-    name: 'Jun (陳佳駿)',
+    name: 'Jun (吳佳駿)',
     role: 'AIoT Engineer & Developer • 物聯網與智慧系統探索者'
   };
 
@@ -64,8 +64,13 @@
       const saved = localStorage.getItem(STORAGE_KEYS.PROFILE);
       if (saved) {
         const parsed = JSON.parse(saved);
+        let name = parsed.name || DEFAULT_PROFILE.name;
+        if (name === 'Jun (陳佳駿)' || name === 'Alex Morgan' || name === 'Huan Chen (陳煥)') {
+          name = DEFAULT_PROFILE.name;
+          localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify({ name, role: parsed.role || DEFAULT_PROFILE.role }));
+        }
         return {
-          name: parsed.name || DEFAULT_PROFILE.name,
+          name,
           role: parsed.role || DEFAULT_PROFILE.role
         };
       }
