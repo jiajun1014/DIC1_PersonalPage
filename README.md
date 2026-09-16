@@ -2,7 +2,7 @@
 
 A sleek, responsive personal dashboard and high-precision live clock built with modern web standards, glassmorphism aesthetics, and real-time state persistence.
 
-![Personal Space Dashboard](avatar.jpg)
+![Personal Space Live Demo Snapshot](demo.png)
 
 ## ✨ Features
 
