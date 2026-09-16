@@ -6,7 +6,7 @@ A sleek, responsive personal dashboard and high-precision live clock built with 
 
 👉 Live Demo: https://jiajun1014.github.io/NCHU_AIOT/
 
-![Live Demonstration](demo.png)
+![Live Demonstration](demo_snapshot.png)
 
 ---
 
