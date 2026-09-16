@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cyan">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Personal Space • JUN | Live Clock & Dashboard</title>
+  <meta name="description"
+    content="Personal space with live precision clock, dynamic greeting, customizable profile, and day progress tracking.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Ambient background glow effects -->
+  <div class="ambient-glow orb-1" aria-hidden="true"></div>
+  <div class="ambient-glow orb-2" aria-hidden="true"></div>
+  <div class="ambient-glow orb-3" aria-hidden="true"></div>
+  <div class="bg-grid-overlay" aria-hidden="true"></div>
+
+  <!-- Toast notification container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav" id="top-nav">
+      <div class="nav-brand">
+        <span class="brand-dot"></span>
+        <span class="brand-text">PERSONAL SPACE</span>
+        <span class="version-badge">v2.4</span>
+      </div>
+
+      <div class="nav-actions">
+        <!-- Accent Theme Picker -->
+        <div class="theme-picker" id="theme-picker" title="Select color accent">
+          <button class="theme-btn active" data-color="cyan" aria-label="Cyan theme" id="theme-cyan"></button>
+          <button class="theme-btn" data-color="violet" aria-label="Violet theme" id="theme-violet"></button>
+          <button class="theme-btn" data-color="emerald" aria-label="Emerald theme" id="theme-emerald"></button>
+          <button class="theme-btn" data-color="amber" aria-label="Amber theme" id="theme-amber"></button>
+        </div>
+
+        <!-- Format toggle -->
+        <button class="icon-toggle-btn" id="format-toggle-btn" title="Toggle 12h / 24h clock format">
+          <span class="toggle-label" id="format-toggle-label">24H</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+      <!-- Left Column: Profile & Bio Card -->
+      <section class="glass-card profile-card" id="profile-section">
+        <div class="card-glow-border"></div>
+
+        <div class="profile-header">
+          <div class="avatar-wrapper">
+            <img src="avatar.jpg" alt="Profile avatar" class="avatar-img" id="avatar-img" />
+            <div class="status-indicator-dot" title="Active now"></div>
+          </div>
+          <div class="status-pill">
+            <span class="pulse-dot"></span>
+            <span class="status-text" id="status-text" contenteditable="true" spellcheck="false">🟢 Focus Mode:
+              Creating</span>
+          </div>
+        </div>
+
+        <div class="greeting-box">
+          <span class="greeting-prefix" id="greeting-prefix">Good morning,</span>
+        </div>
+
+        <!-- Editable Name Heading -->
+        <div class="name-container">
+          <h1 class="user-name" id="user-name" title="Click to edit your name" contenteditable="true"
+            spellcheck="false">JUN</h1>
+          <button class="edit-icon-btn" id="edit-name-btn" aria-label="Edit name" title="Click to edit name">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Editable Tagline / Role -->
+        <p class="user-bio" id="user-bio" contenteditable="true" spellcheck="false" title="Click to edit tagline">
+          Creative Technologist, Developer & Explorer. Crafting interactive digital experiences.
+        </p>
+
+        <div class="profile-meta-chips">
+          <div class="meta-chip" id="location-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span id="detected-location">Detecting...</span>
+          </div>
+          <div class="meta-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <span>NCHU AIoT</span>
+          </div>
+        </div>
+
+        <!-- Quick Links / Connect -->
+        <div class="social-links-shelf">
+          <a href="https://github.com/jiajun1014/NCHU_AIOT" target="_blank" rel="noopener noreferrer" class="social-chip" id="link-github" title="View NCHU_AIOT on GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            <span>NCHU_AIOT</span>
+          </a>
+          <a href="mailto:contact@example.com" class="social-chip" id="link-email">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>Email</span>
+          </a>
+          <button class="social-chip action-chip" id="copy-card-btn" title="Share profile link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+            <span>Share</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Column: Precision Live Clock & Dashboard Widgets -->
+      <section class="clock-and-widgets-grid">
+        <!-- Main Real-Time Clock Card -->
+        <article class="glass-card clock-hero-card" id="clock-hero-card">
+          <div class="card-glow-border"></div>
+
+          <div class="clock-card-top">
+            <div class="live-badge">
+              <span class="live-dot"></span>
+              <span>LIVE CLOCK</span>
+            </div>
+            <div class="clock-actions">
+              <button class="copy-time-btn" id="copy-time-btn" title="Copy formatted timestamp to clipboard">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span>Copy Time</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Digital Clock Display -->
+          <div class="clock-display-zone">
+            <div class="digits-group">
+              <span class="time-digit" id="hours-digit">10</span>
+              <span class="time-colon" id="colon-1">:</span>
+              <span class="time-digit" id="minutes-digit">14</span>
+              <span class="time-colon" id="colon-2">:</span>
+              <span class="time-digit seconds-digit" id="seconds-digit">35</span>
+            </div>
+            <span class="period-badge" id="period-badge">AM</span>
+          </div>
+
+          <!-- Seconds Continuous Progress Bar -->
+          <div class="seconds-track-wrapper">
+            <div class="seconds-bar-fill" id="seconds-bar-fill" style="width: 58%;"></div>
+          </div>
+
+          <!-- Date & Timezone Information -->
+          <div class="clock-meta-row">
+            <div class="meta-item date-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span id="current-full-date">Wednesday, September 16, 2026</span>
+            </div>
+
+            <div class="meta-item tz-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                </path>
+              </svg>
+              <span id="current-timezone">Asia/Taipei (UTC+8)</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Secondary Widgets Grid -->
+        <div class="sub-widgets-row">
+          <!-- Widget 1: Day Cycle Progress -->
+          <article class="glass-card sub-card day-progress-card" id="day-progress-card">
+            <div class="card-glow-border"></div>
+            <div class="sub-card-header">
+              <div class="sub-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <line x1="12" y1="1" x2="12" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="23"></line>
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                  <line x1="1" y1="12" x2="3" y2="12"></line>
+                  <line x1="21" y1="12" x2="23" y2="12"></line>
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <span>Day Cycle</span>
+              </div>
+              <span class="stat-percentage" id="day-progress-percent">43%</span>
+            </div>
+
+            <div class="progress-ring-container">
+              <div class="metric-bar-track">
+                <div class="metric-bar-fill" id="day-progress-bar" style="width: 43%;"></div>
+              </div>
+            </div>
+            <div class="cycle-subtext" id="cycle-subtext">Daylight Phase • Morning Flow</div>
+          </article>
+
+          <!-- Widget 2: Focus Stopwatch / Timer -->
+          <article class="glass-card sub-card focus-timer-card" id="focus-timer-card">
+            <div class="card-glow-border"></div>
+            <div class="sub-card-header">
+              <div class="sub-card-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Deep Work Stopwatch</span>
+              </div>
+              <span class="timer-mode-tag" id="timer-status-tag">READY</span>
+            </div>
+
+            <div class="stopwatch-display" id="stopwatch-display">00:00:00</div>
+
+            <div class="stopwatch-controls">
+              <button class="timer-btn start-btn" id="timer-toggle-btn">Start</button>
+              <button class="timer-btn reset-btn" id="timer-reset-btn">Reset</button>
+            </div>
+          </article>
+        </div>
+
+        <!-- Widget 3: Quick Focus Memo -->
+        <article class="glass-card sub-card memo-card" id="memo-card">
+          <div class="card-glow-border"></div>
+          <div class="sub-card-header">
+            <div class="sub-card-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Daily Focus & Intentions</span>
+            </div>
+            <span class="auto-save-hint" id="memo-save-indicator">Saved</span>
+          </div>
+          <textarea class="memo-textarea" id="memo-input"
+            placeholder="What are your key priorities for today? (Auto-saved)"></textarea>
+        </article>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Designed with precision • Personal Dashboard & Real-Time Clock • Local Data Persisted</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
