@@ -1,151 +1,122 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="cyan">
-
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Personal Space • JUN | Live Clock & Dashboard</title>
-  <meta name="description"
-    content="Personal space with live precision clock, dynamic greeting, customizable profile, and day progress tracking.">
+  <title>Jun (陳佳駿) | AIoT 2026 Personal Page</title>
+  <meta name="description" content="Personal portfolio and live time dashboard for Jun (陳佳駿), AIoT Engineer & Developer.">
+  
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-  <!-- Ambient background glow effects -->
-  <div class="ambient-glow orb-1" aria-hidden="true"></div>
-  <div class="ambient-glow orb-2" aria-hidden="true"></div>
-  <div class="ambient-glow orb-3" aria-hidden="true"></div>
-  <div class="bg-grid-overlay" aria-hidden="true"></div>
+  <!-- Ambient Interactive Particle Canvas -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
 
-  <!-- Toast notification container -->
-  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-orb orb-cyan" aria-hidden="true"></div>
+  <div class="ambient-orb orb-purple" aria-hidden="true"></div>
+  <div class="ambient-orb orb-blue" aria-hidden="true"></div>
 
-  <div class="app-wrapper">
+  <!-- Main Page Wrapper -->
+  <div class="page-wrapper">
+    
     <!-- Top Navigation Bar -->
-    <header class="top-nav" id="top-nav">
+    <header class="top-nav">
       <div class="nav-brand">
-        <span class="brand-dot"></span>
-        <span class="brand-text">PERSONAL SPACE</span>
-        <span class="version-badge">v2.4</span>
+        <span class="brand-badge">AIoT // 2026</span>
+        <span class="brand-divider">/</span>
+        <span class="brand-sub">NODE_JJ.01</span>
       </div>
 
-      <div class="nav-actions">
-        <!-- Accent Theme Picker -->
-        <div class="theme-picker" id="theme-picker" title="Select color accent">
-          <button class="theme-btn active" data-color="cyan" aria-label="Cyan theme" id="theme-cyan"></button>
-          <button class="theme-btn" data-color="violet" aria-label="Violet theme" id="theme-violet"></button>
-          <button class="theme-btn" data-color="emerald" aria-label="Emerald theme" id="theme-emerald"></button>
-          <button class="theme-btn" data-color="amber" aria-label="Amber theme" id="theme-amber"></button>
+      <div class="nav-controls">
+        <div class="status-indicator" title="System status is operational">
+          <span class="status-dot"></span>
+          <span class="status-text">SYSTEM ONLINE</span>
         </div>
 
-        <!-- Format toggle -->
-        <button class="icon-toggle-btn" id="format-toggle-btn" title="Toggle 12h / 24h clock format">
-          <span class="toggle-label" id="format-toggle-label">24H</span>
+        <button id="format-toggle-btn" class="nav-btn" title="Toggle 12H / 24H time format">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span id="format-label">24H</span>
+        </button>
+
+        <button id="quick-edit-btn" class="nav-btn" title="Edit Profile Details">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 20h9"></path>
+            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+          </svg>
+          <span>Edit Profile</span>
         </button>
       </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="main-container">
-      <!-- Left Column: Profile & Bio Card -->
-      <section class="glass-card profile-card" id="profile-section">
-        <div class="card-glow-border"></div>
-
-        <div class="profile-header">
-          <div class="avatar-wrapper">
-            <img src="avatar.jpg" alt="Profile avatar" class="avatar-img" id="avatar-img" />
-            <div class="status-indicator-dot" title="Active now"></div>
-          </div>
-          <div class="status-pill">
-            <span class="pulse-dot"></span>
-            <span class="status-text" id="status-text" contenteditable="true" spellcheck="false">🟢 Focus Mode:
-              Creating</span>
-          </div>
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Hero Header & Identity -->
+      <section class="hero-identity-section">
+        <div class="greeting-pill" id="dynamic-greeting-pill">
+          <span id="greeting-icon" class="greeting-icon">🌅</span>
+          <span id="greeting-text" class="greeting-text">GOOD MORNING, JUN</span>
         </div>
 
-        <div class="greeting-box">
-          <span class="greeting-prefix" id="greeting-prefix">Good morning,</span>
-        </div>
-
-        <!-- Editable Name Heading -->
-        <div class="name-container">
-          <h1 class="user-name" id="user-name" title="Click to edit your name" contenteditable="true"
-            spellcheck="false">JUN</h1>
-          <button class="edit-icon-btn" id="edit-name-btn" aria-label="Edit name" title="Click to edit name">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 20h9"></path>
-              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-            </svg>
-          </button>
-        </div>
-
-        <!-- Editable Tagline / Role -->
-        <p class="user-bio" id="user-bio" contenteditable="true" spellcheck="false" title="Click to edit tagline">
-          Creative Technologist, Developer & Explorer. Crafting interactive digital experiences.
-        </p>
-
-        <div class="profile-meta-chips">
-          <div class="meta-chip" id="location-chip">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            <span id="detected-location">Detecting...</span>
+        <div class="profile-card glass-panel">
+          <div class="profile-avatar-wrapper">
+            <div class="avatar-glow"></div>
+            <div class="avatar-circle">
+              <span class="avatar-initials">JJ</span>
+            </div>
+            <span class="avatar-status-badge" title="Active in AIoT Lab">●</span>
           </div>
-          <div class="meta-chip">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-            </svg>
-            <span>NCHU AIoT</span>
-          </div>
-        </div>
 
-        <!-- Quick Links / Connect -->
-        <div class="social-links-shelf">
-          <a href="https://github.com/jiajun1014/NCHU_AIOT" target="_blank" rel="noopener noreferrer" class="social-chip" id="link-github" title="View NCHU_AIOT on GitHub">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path
-                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            <span>NCHU_AIOT</span>
-          </a>
-          <a href="mailto:contact@example.com" class="social-chip" id="link-email">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            <span>Email</span>
-          </a>
-          <button class="social-chip action-chip" id="copy-card-btn" title="Share profile link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-            </svg>
-            <span>Share</span>
-          </button>
+          <div class="profile-info">
+            <div class="name-row">
+              <h1 id="user-name" class="user-name">Jun (陳佳駿)</h1>
+              <button id="inline-rename-btn" class="icon-action-btn" title="Change name" aria-label="Change display name">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                </svg>
+              </button>
+            </div>
+            <p id="user-role" class="user-role">AIoT Engineer & Developer • 物聯網與智慧系統探索者</p>
+            <div class="profile-badges">
+              <span class="spec-badge">Artificial Intelligence of Things</span>
+              <span class="spec-badge">Embedded Systems</span>
+              <span class="spec-badge">Edge Computing</span>
+              <a href="https://github.com/jiajun1014/NCHU_AIOT" target="_blank" rel="noopener noreferrer" class="spec-badge github-badge" title="View repository on GitHub">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>NCHU_AIOT</span>
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
-      <!-- Right Column: Precision Live Clock & Dashboard Widgets -->
-      <section class="clock-and-widgets-grid">
-        <!-- Main Real-Time Clock Card -->
-        <article class="glass-card clock-hero-card" id="clock-hero-card">
-          <div class="card-glow-border"></div>
-
-          <div class="clock-card-top">
-            <div class="live-badge">
-              <span class="live-dot"></span>
-              <span>LIVE CLOCK</span>
+      <!-- HERO CLOCK WIDGET -->
+      <section class="clock-hero-section">
+        <div class="clock-card glass-panel glow-card">
+          <div class="clock-card-header">
+            <div class="clock-label">
+              <svg class="chip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>REAL-TIME LOCAL TELEMETRY</span>
             </div>
             <div class="clock-actions">
-              <button class="copy-time-btn" id="copy-time-btn" title="Copy formatted timestamp to clipboard">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <button id="copy-time-btn" class="pill-btn" title="Copy ISO Timestamp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
@@ -155,129 +126,266 @@
           </div>
 
           <!-- Digital Clock Display -->
-          <div class="clock-display-zone">
-            <div class="digits-group">
-              <span class="time-digit" id="hours-digit">10</span>
-              <span class="time-colon" id="colon-1">:</span>
-              <span class="time-digit" id="minutes-digit">14</span>
-              <span class="time-colon" id="colon-2">:</span>
-              <span class="time-digit seconds-digit" id="seconds-digit">35</span>
+          <div class="digital-clock-face" id="clock-face">
+            <div class="time-digits-group">
+              <div class="digit-box" id="box-hours">
+                <span id="clock-hours" class="time-digit">00</span>
+                <span class="digit-sublabel">HOURS</span>
+              </div>
+              <span class="colon-pulse">:</span>
+              <div class="digit-box" id="box-minutes">
+                <span id="clock-minutes" class="time-digit">00</span>
+                <span class="digit-sublabel">MINUTES</span>
+              </div>
+              <span class="colon-pulse">:</span>
+              <div class="digit-box" id="box-seconds">
+                <span id="clock-seconds" class="time-digit highlight-cyan">00</span>
+                <span class="digit-sublabel">SECONDS</span>
+              </div>
             </div>
-            <span class="period-badge" id="period-badge">AM</span>
+            <div class="period-container" id="period-container">
+              <span id="clock-period" class="period-badge">AM</span>
+            </div>
           </div>
 
-          <!-- Seconds Continuous Progress Bar -->
-          <div class="seconds-track-wrapper">
-            <div class="seconds-bar-fill" id="seconds-bar-fill" style="width: 58%;"></div>
-          </div>
-
-          <!-- Date & Timezone Information -->
-          <div class="clock-meta-row">
-            <div class="meta-item date-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <!-- Calendar & Metadata Display -->
+          <div class="clock-footer-meta">
+            <div class="date-display-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                 <line x1="16" y1="2" x2="16" y2="6"></line>
                 <line x1="8" y1="2" x2="8" y2="6"></line>
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
-              <span id="current-full-date">Wednesday, September 16, 2026</span>
+              <span id="clock-date" class="clock-date-text">Loading local calendar...</span>
             </div>
 
-            <div class="meta-item tz-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                </path>
-              </svg>
-              <span id="current-timezone">Asia/Taipei (UTC+8)</span>
+            <div class="meta-tags-row">
+              <div class="meta-chip">
+                <span class="chip-dot"></span>
+                <span id="clock-timezone">Asia/Taipei (UTC+8)</span>
+              </div>
+              <div class="meta-chip" id="day-progress-chip" title="Percentage of day elapsed">
+                <span class="chip-label">DAY PROGRESS:</span>
+                <span id="day-progress-val">0%</span>
+                <div class="mini-progress-bar">
+                  <div class="mini-progress-fill" id="day-progress-fill" style="width: 0%"></div>
+                </div>
+              </div>
             </div>
           </div>
-        </article>
-
-        <!-- Secondary Widgets Grid -->
-        <div class="sub-widgets-row">
-          <!-- Widget 1: Day Cycle Progress -->
-          <article class="glass-card sub-card day-progress-card" id="day-progress-card">
-            <div class="card-glow-border"></div>
-            <div class="sub-card-header">
-              <div class="sub-card-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="5"></circle>
-                  <line x1="12" y1="1" x2="12" y2="3"></line>
-                  <line x1="12" y1="21" x2="12" y2="23"></line>
-                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                  <line x1="1" y1="12" x2="3" y2="12"></line>
-                  <line x1="21" y1="12" x2="23" y2="12"></line>
-                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                </svg>
-                <span>Day Cycle</span>
-              </div>
-              <span class="stat-percentage" id="day-progress-percent">43%</span>
-            </div>
-
-            <div class="progress-ring-container">
-              <div class="metric-bar-track">
-                <div class="metric-bar-fill" id="day-progress-bar" style="width: 43%;"></div>
-              </div>
-            </div>
-            <div class="cycle-subtext" id="cycle-subtext">Daylight Phase • Morning Flow</div>
-          </article>
-
-          <!-- Widget 2: Focus Stopwatch / Timer -->
-          <article class="glass-card sub-card focus-timer-card" id="focus-timer-card">
-            <div class="card-glow-border"></div>
-            <div class="sub-card-header">
-              <div class="sub-card-title">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <polyline points="12 6 12 12 16 14"></polyline>
-                </svg>
-                <span>Deep Work Stopwatch</span>
-              </div>
-              <span class="timer-mode-tag" id="timer-status-tag">READY</span>
-            </div>
-
-            <div class="stopwatch-display" id="stopwatch-display">00:00:00</div>
-
-            <div class="stopwatch-controls">
-              <button class="timer-btn start-btn" id="timer-toggle-btn">Start</button>
-              <button class="timer-btn reset-btn" id="timer-reset-btn">Reset</button>
-            </div>
-          </article>
         </div>
-
-        <!-- Widget 3: Quick Focus Memo -->
-        <article class="glass-card sub-card memo-card" id="memo-card">
-          <div class="card-glow-border"></div>
-          <div class="sub-card-header">
-            <div class="sub-card-title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                <polyline points="14 2 14 8 20 8"></polyline>
-                <line x1="16" y1="13" x2="8" y2="13"></line>
-                <line x1="16" y1="17" x2="8" y2="17"></line>
-                <polyline points="10 9 9 9 8 9"></polyline>
-              </svg>
-              <span>Daily Focus & Intentions</span>
-            </div>
-            <span class="auto-save-hint" id="memo-save-indicator">Saved</span>
-          </div>
-          <textarea class="memo-textarea" id="memo-input"
-            placeholder="What are your key priorities for today? (Auto-saved)"></textarea>
-        </article>
       </section>
+
+      <!-- Highlights & Focus Cards Grid -->
+      <section class="dashboard-grid">
+        
+        <!-- Card 1: About Me & Background -->
+        <article class="grid-card glass-panel">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="card-icon-box cyan-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+              </div>
+              <h3>About Jun</h3>
+            </div>
+            <span class="card-badge">Profile</span>
+          </div>
+          <div class="card-body">
+            <p class="card-lead">
+              Passionate engineer exploring the convergence of <strong>Artificial Intelligence</strong>, <strong>Internet of Things (IoT)</strong>, and <strong>Embedded Edge Computing</strong>.
+            </p>
+            <p class="card-text">
+              Building intelligent physical interfaces, sensor telemetry pipelines, and low-latency decision systems designed for resilient, real-world deployment.
+            </p>
+            <div class="stat-pills-row">
+              <div class="stat-pill">
+                <span class="stat-number">2026</span>
+                <span class="stat-caption">Cohort</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-number">Edge AI</span>
+                <span class="stat-caption">Specialization</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-number">100%</span>
+                <span class="stat-caption">Curiosity</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2: AIoT 2026 Focus Areas -->
+        <article class="grid-card glass-panel">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="card-icon-box purple-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <h3>AIoT 2026 Focus Pillars</h3>
+            </div>
+            <span class="card-badge">Curriculum & Research</span>
+          </div>
+          <div class="card-body">
+            <ul class="focus-list">
+              <li class="focus-item">
+                <div class="focus-bullet cyan"></div>
+                <div class="focus-content">
+                  <strong>Embedded Edge ML & TinyML</strong>
+                  <span>Running quantized neural nets on microcontrollers and neural accelerators.</span>
+                </div>
+              </li>
+              <li class="focus-item">
+                <div class="focus-bullet purple"></div>
+                <div class="focus-content">
+                  <strong>Sensor Networks & Telemetry</strong>
+                  <span>MQTT, WebSockets, Bluetooth LE, and multi-node sensor synchronization.</span>
+                </div>
+              </li>
+              <li class="focus-item">
+                <div class="focus-bullet blue"></div>
+                <div class="focus-content">
+                  <strong>Intelligent Automation</strong>
+                  <span>Closed-loop physical cyber-systems, computer vision, and autonomous telemetry.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- Card 3: Skills & Tech Arsenal -->
+        <article class="grid-card glass-panel">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="card-icon-box blue-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="16 18 22 12 16 6"></polyline>
+                  <polyline points="8 6 2 12 8 18"></polyline>
+                </svg>
+              </div>
+              <h3>Technical Arsenal</h3>
+            </div>
+            <span class="card-badge">Competencies</span>
+          </div>
+          <div class="card-body">
+            <div class="skills-cluster">
+              <span class="skill-tag"><span class="skill-dot"></span>C / C++</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Python</span>
+              <span class="skill-tag"><span class="skill-dot"></span>ESP32 / Arduino</span>
+              <span class="skill-tag"><span class="skill-dot"></span>FreeRTOS</span>
+              <span class="skill-tag"><span class="skill-dot"></span>TensorFlow Lite / TinyML</span>
+              <span class="skill-tag"><span class="skill-dot"></span>MQTT & CoAP</span>
+              <span class="skill-tag"><span class="skill-dot"></span>JavaScript / Web</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Linux / Docker</span>
+              <span class="skill-tag"><span class="skill-dot"></span>Computer Vision</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4: Node Health & Hardware Telemetry Simulation -->
+        <article class="grid-card glass-panel">
+          <div class="card-header">
+            <div class="card-title-wrap">
+              <div class="card-icon-box green-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                </svg>
+              </div>
+              <h3>Live Node Diagnostics</h3>
+            </div>
+            <span class="card-badge pulse-badge">ACTIVE LINK</span>
+          </div>
+          <div class="card-body">
+            <div class="telemetry-grid">
+              <div class="telemetry-item">
+                <span class="telemetry-label">GATEWAY LATENCY</span>
+                <span class="telemetry-value highlight-green" id="telemetry-latency">14 ms</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telemetry-label">CPU CLOCK FREQ</span>
+                <span class="telemetry-value">240 MHz</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telemetry-label">MEMORY BUFFER</span>
+                <span class="telemetry-value">94.8% OK</span>
+              </div>
+              <div class="telemetry-item">
+                <span class="telemetry-label">TELEMETRY STREAM</span>
+                <span class="telemetry-value highlight-cyan">1000 Hz Live</span>
+              </div>
+            </div>
+            <div class="telemetry-chart-bar" aria-hidden="true">
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+              <div class="sparkline-bar"></div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
     </main>
 
     <!-- Footer -->
-    <footer class="app-footer">
-      <p>Designed with precision • Personal Dashboard & Real-Time Clock • Local Data Persisted</p>
+    <footer class="page-footer">
+      <div class="footer-left">
+        <p>© 2026 <strong>Jun (陳佳駿)</strong> • AIoT Laboratory</p>
+        <p class="footer-subtext">Designed with modern dark glassmorphism & live browser telemetry</p>
+      </div>
+      <div class="footer-right">
+        <button id="reset-profile-btn" class="footer-btn">Reset Profile to Default</button>
+      </div>
     </footer>
+
   </div>
 
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast" role="alert" aria-live="polite">
+    <span id="toast-icon">✓</span>
+    <span id="toast-message">Timestamp copied to clipboard!</span>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="edit-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h3>Customize Profile</h3>
+        <button id="modal-close-btn" class="modal-close-btn" aria-label="Close modal">×</button>
+      </div>
+      <form id="edit-profile-form" class="modal-form">
+        <div class="form-group">
+          <label for="input-name">Your Full / Display Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Jun (陳佳駿)" required maxlength="40">
+        </div>
+        <div class="form-group">
+          <label for="input-role">Role & Tagline</label>
+          <input type="text" id="input-role" placeholder="e.g. AIoT Engineer & Developer" required maxlength="80">
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel-btn" class="secondary-btn">Cancel</button>
+          <button type="submit" class="primary-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="app.js"></script>
 </body>
-
 </html>
